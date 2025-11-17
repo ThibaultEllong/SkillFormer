@@ -23,11 +23,16 @@ def convert_json_to_jsonl(input_file, output_file):
             # Estrai il livello di competenza
             proficiency_level = annotation.get('proficiency_score', '')
             
+            task_id = annotation.get('take_uid', '')
+            
+            scenario_name = annotation.get('scenario_name', '')
             # Crea un nuovo oggetto nel formato desiderato
             new_entry = {
                 'video_paths': video_paths,
                 'analysis': '',
-                'proficiency_level': proficiency_level
+                'proficiency_level': proficiency_level,
+                'take_uid': task_id,
+                'scenario_name': scenario_name
             }
             
             # Scrivi l'oggetto nel file JSONL
@@ -38,8 +43,8 @@ def convert_json_to_jsonl(input_file, output_file):
 def main():
     # Configurazione degli argomenti da riga di comando
     parser = argparse.ArgumentParser(description='Converte un file JSON in formato JSONL.')
-    parser.add_argument('--input', '-i', type=str, required=True, help='Percorso del file JSON di input')
-    parser.add_argument('--output', '-o', type=str, required=True, help='Percorso del file JSONL di output')
+    parser.add_argument('--input', '-i', type=str, default='/home/tellong/stockage2/EgoExo4D/annotations/proficiency_demonstrator_train.json', help='Percorso del file JSON di input')
+    parser.add_argument('--output', '-o', type=str, default='/home/tellong/Bureau/Code/Code/GazeSkill/SkillFormer/annotations/annotations_train.jsonl', help='Percorso del file JSONL di output')
     
     # Parsing degli argomenti
     args = parser.parse_args()
